@@ -18,31 +18,31 @@ T{ -2e 3e 2e discriminant 25e 1e-12 f~ -> true  }T
     
 \ x^2 - 5x + 6 = 0
 \ roots: 2, 3
-T{ 1e -5e 6e quadratic-real
+T{ 1e -5e 6e quadratic
    2e 3e 1e-10 2f~
 -> true true }T
 
 \ x^2 - 1 = 0
 \ roots: -1, 1
-T{ 1e 0e -1e quadratic-real
+T{ 1e 0e -1e quadratic
    -1e 1e 1e-10 2f~
 -> true true }T
 
 \ 2x^2 - 8x + 6 = 0
 \ roots: 1, 3
-T{ 2e -8e 6e quadratic-real
+T{ 2e -8e 6e quadratic
    1e 3e 1e-10 2f~
 -> true true }T
 
 \ x^2 + 2x + 1 = 0
 \ singular/repeated root: -1
-T{ 1e 2e 1e quadratic-real
+T{ 1e 2e 1e quadratic
    -1e -1e 1e-10 2f~
 -> true true }T
 
 \ 4x^2 - 12x + 9 = 0
 \ singular/repeated root: 1.5
-T{ 4e -12e 9e quadratic-real
+T{ 4e -12e 9e quadratic
    1.5e 1.5e 1e-10 2f~
 -> true true }T
 

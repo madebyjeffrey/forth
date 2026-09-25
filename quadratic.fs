@@ -22,11 +22,19 @@ require fp.fs
 	f/              ( F: -b-sqrt-d/2a sqrt-d+-b/2a )
 	true 
 	;
+	
+: quadratic-complex
+	( -- false ) ( F: a b c -- 0e 0e )
+	fdrop fdrop fdrop 0e 0e false ;
 
 : quadratic 
-	( -- true ) ( F: a b c -- x1 x2 ) \ a >= 0
-	( -- false ) ( F: a b c -- 0e 0e ) \ a < 0
-	2 fpick 0e f< 
-	if quadratic-real then fdrop fdrop fdrop 0e 0e false 
+	( -- true ) ( F: a b c -- x1 x2 ) \ disc >= 0
+	( -- false ) ( F: a b c -- 0e 0e ) \ disc < 0
+	3fdup discriminant 0e f>= 
+	if 
+		quadratic-real 
+	else
+		quadratic-complex
+	then 
 	;
 
