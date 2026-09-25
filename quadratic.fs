@@ -6,20 +6,23 @@ require fp.fs
 : discriminant ( F: a b c -- d ) 
 	frot f* 4e f* fswap fdup f* fswap f- 
 	;
+
+\ a more numerically stable quadratic solution part
+\ q = -1/2 [ b + sgn(b)*discriminant ]
+: fq ( F: a b c -- q )
+	3fdup discriminant fsqrt  ( F: a b c sqrt[d] )
+	fnip frot fdrop fswap     ( F: d b )
+	fdup fsgn                 ( F: d b sgn[b] )
+	frot f* f+ -0.5e f*
+	;
   
+\ when b = 0 - still have issues and discriminant is 0  
 : quadratic-real
 	( -- true ) ( F: a b c -- x1 x2 ) 
-	3fdup discriminant fsqrt ( F: a b c sqrt-d )
-	frot fnegate 	( F: a c sqrt-d -b )
-	frot fdrop 		( F: a sqrt-d -b )
-	2fdup 			( F: a sqrt-d -b sqrt-d -b  )
-	f+  			( F: a sqrt-d -b sqrt-d+-b  )
-	f-rot           ( F: a sqrt-d+-b sqrt-d -b  )
-	fswap f-        ( F: a sqrt-d+-b -b-sqrt-d  )
-	frot 2e f*      ( F: sqrt-d+-b -b-sqrt-d 2a )
-	fswap fover     ( F: sqrt-d+-b 2a -b-sqrt-d 2a )
-	f/ f-rot        ( F: -b-sqrt-d/2a sqrt-d+-b 2a )
-	f/              ( F: -b-sqrt-d/2a sqrt-d+-b/2a )
+	3fdup fq          ( F: a b c q )
+	fdup f-rot f/     ( F: a b q c/q ) 
+	frot fdrop f-rot  ( F: c/q a q )
+	fswap f/ fswap    ( F: a/q c/q )	
 	true 
 	;
 	

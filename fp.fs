@@ -24,3 +24,10 @@
   r> and
   r> and
   fdrop fdrop fdrop fdrop fdrop fdrop ;
+
+: fsgn ( r1 -- r2 ) \ floating-point sign function
+  fdup f0< if
+    fdrop -1.0e0
+  else
+    f0> if 1.0e0 else 0.0e0 then
+  then ;
