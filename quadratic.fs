@@ -1,3 +1,4 @@
+require fp.fs
 
 \ ax^2 + bx + c = (-b +/- sqrt(b^2-4ac) )/ 2a
 \ a != 0
@@ -5,23 +6,17 @@
 : discriminant ( F: a b c -- d ) 
 	frot f* 4e f* fswap fdup f* fswap f- 
 	;
-
-: f3dup  ( F: a b c -- a b c a b c )
-  2 fpick 2 fpick 2 fpick ;
-  
-: f-rot  ( F: r1 r2 r3 -- r3 r1 r2 )
-  frot frot ;
   
 : quadratic-real
 	( -- true ) ( F: a b c -- x1 x2 ) 
-	f3dup discriminant fsqrt ( F: a b c sqrt-d )
+	3fdup discriminant fsqrt ( F: a b c sqrt-d )
 	frot fnegate 	( F: a c sqrt-d -b )
 	frot fdrop 		( F: a sqrt-d -b )
-	f2dup 			( F: a sqrt-d -b sqrt-d -b  )
+	2fdup 			( F: a sqrt-d -b sqrt-d -b  )
 	f+  			( F: a sqrt-d -b sqrt-d+-b  )
 	f-rot           ( F: a sqrt-d+-b sqrt-d -b  )
 	fswap f-        ( F: a sqrt-d+-b -b-sqrt-d  )
-	2 fpick 2e f*   ( F: sqrt-d+-b -b-sqrt-d 2a )
+	frot 2e f*      ( F: sqrt-d+-b -b-sqrt-d 2a )
 	fswap fover     ( F: sqrt-d+-b 2a -b-sqrt-d 2a )
 	f/ f-rot        ( F: -b-sqrt-d/2a sqrt-d+-b 2a )
 	f/              ( F: -b-sqrt-d/2a sqrt-d+-b/2a )
